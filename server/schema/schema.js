@@ -1,9 +1,7 @@
 const graphql = require("graphql");
 const Car = require("../models/car");
 const Owner = require("../models/owner");
-const _ = require('lodash');
-
-
+const _ = require("lodash");
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -14,41 +12,38 @@ const {
   GraphQLNonNull
 } = graphql;
 
-
-const CarType = new GraphQLObjectType ({
+const CarType = new GraphQLObjectType({
   name: "Car",
   fields: () => ({
     id: { type: GraphQLID },
     carName: { type: GraphQLString },
-    lastfillup: { type: GraphQLInt },
-    lastfilluptime: { type: GraphQLString },
-    lastfilluplocation: { type: GraphQLString },
-    fuelleft: { type: GraphQLInt },
-    traveldsince: { type: GraphQLInt },
-    diagnostic: { type: GraphQLString },
-    diagnosticdetail: { type: GraphQLString },
-    businessratio: { type: GraphQLInt },
-    businesstotal: { type: GraphQLInt },
-    averagespeed: { type: GraphQLInt },
-    traveldistancetotal: { type: GraphQLInt },
-    traveldistancethisyear: { type: GraphQLInt },
-    timeincar: { type: GraphQLInt },
+    lastFillUp: { type: GraphQLInt },
+    lastFillUpTime: { type: GraphQLString },
+    lastLocation: { type: GraphQLString },
+    fuelLeft: { type: GraphQLInt },
+    travelSince: { type: GraphQLInt },
+    diagnosticIssue: { type: GraphQLString },
+    diagnosticDetail: { type: GraphQLString },
+    businessRatio: { type: GraphQLInt },
+    businessTotal: { type: GraphQLInt },
+    averageSpeed: { type: GraphQLInt },
+    travelDistanceTotal: { type: GraphQLInt },
+    travelDistanceThisYear: { type: GraphQLInt },
+    timeInCar: { type: GraphQLInt },
     emissions: { type: GraphQLInt },
-    fueleconomy: { type: GraphQLInt },
+    fuelEconomy: { type: GraphQLInt },
     parking: { type: GraphQLString },
-    timetraveld: { type: GraphQLString },
-    startlocation: { type: GraphQLString },
-    endlocation: { type: GraphQLString },
+    timeTraveld: { type: GraphQLString },
+    startLocation: { type: GraphQLString },
+    endLocation: { type: GraphQLString },
     owner: {
       type: OwnerType,
-      resolve(parent, args){
-        // return _.find(owners, { id: parent.ownerId })
-        return Owner.findById(parent.ownerId)
+      resolve(parent, args) {
+        return Owner.findById(parent.ownerId);
       }
     }
   })
 });
-
 
 const OwnerType = new GraphQLObjectType({
   name: "Owner",
@@ -57,55 +52,44 @@ const OwnerType = new GraphQLObjectType({
     firstName: { type: GraphQLString },
     cars: {
       type: new GraphQLList(CarType),
-      resolve(parent, args){
-        return Car.find({ ownerId: parent.id })
+      resolve(parent, args) {
+        return Car.find({ ownerId: parent.id });
       }
     }
   })
 });
-
-
-
-
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     car: {
       type: CarType,
-      args: { id: { type: GraphQLID}},
+      args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        //code to get data from db /other source
-        // return _.find(cars, {id: args.id});
         return Car.findById(args.id);
       }
     },
     owner: {
       type: OwnerType,
-    args: { id: { type: GraphQLID}},
-    resolve(parent, args){
-      // return _.find(owners, {id: args.id});
-      return Owner.findById(args.id);
-    }
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Owner.findById(args.id);
+      }
     },
     cars: {
       type: new GraphQLList(CarType),
-      resolve(parent, args){
-        // return cars;
+      resolve(parent, args) {
         return Car.find({});
       }
     },
     owners: {
       type: new GraphQLList(OwnerType),
-      resolve(parent, args){
-        // return owners;
+      resolve(parent, args) {
         return Owner.find({});
       }
     }
   }
-})
-
-
+});
 
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
@@ -113,7 +97,7 @@ const Mutation = new GraphQLObjectType({
     addOwner: {
       type: OwnerType,
       args: {
-        firstName: { type: new GraphQLNonNull(GraphQLString)}
+        firstName: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve(parent, args) {
         let owner = new Owner({
@@ -125,98 +109,59 @@ const Mutation = new GraphQLObjectType({
     addCar: {
       type: CarType,
       args: {
-        carName: { type: new GraphQLNonNull(GraphQLString)},
-        lastfillup: { type: GraphQLInt },
-        lastfilluptime: { type: GraphQLString },
-        // lastfilluplocation: { type: GraphQLString },
-        fuelleft: { type: GraphQLInt },
-        traveldsince: { type: GraphQLInt },
-        diagnostic: { type: GraphQLString },
-        diagnosticdetail: { type: GraphQLString },
-        businessratio: { type: GraphQLInt },
-        businesstotal: { type: GraphQLInt },
-        averagespeed: { type: GraphQLInt },
-        traveldistancetotal: { type: GraphQLInt },
-        traveldistancethisyear: { type: GraphQLInt },
-        timeincar: { type: GraphQLInt },
+        carName: { type: new GraphQLNonNull(GraphQLString) },
+        lastFillUp: { type: GraphQLInt },
+        lastFillUpTime: { type: GraphQLString },
+        lastLocation: { type: GraphQLString },
+        fuelLeft: { type: GraphQLInt },
+        travelSince: { type: GraphQLInt },
+        diagnosticIssue: { type: GraphQLString },
+        diagnosticDetail: { type: GraphQLString },
+        businessRatio: { type: GraphQLInt },
+        businessTotal: { type: GraphQLInt },
+        averageSpeed: { type: GraphQLInt },
+        travelDistanceTotal: { type: GraphQLInt },
+        travelDistanceThisYear: { type: GraphQLInt },
+        timeInCar: { type: GraphQLInt },
         emissions: { type: GraphQLInt },
-        fueleconomy: { type: GraphQLInt },
+        fuelEconomy: { type: GraphQLInt },
         parking: { type: GraphQLString },
-        timetraveld: { type: GraphQLString },
-        startlocation: { type: GraphQLString },
-        endlocation: { type: GraphQLString },
+        timeTraveld: { type: GraphQLString },
+        startLocation: { type: GraphQLString },
+        endLocation: { type: GraphQLString },
         ownerId: { type: GraphQLID }
       },
-      resolve(parent, args){
+      resolve(parent, args) {
         let car = new Car({
           carName: args.carName,
-          lastfillup: args.lastfillup,
-          lastfilluptime: args.lastfilluptime,
-          // lastfilluplocation: args.lastfilluplocation,
-          fuelleft: args.fuelleft,
-          traveldsince: args.traveldsince,
-          diagnostic: args.diagnostic,
-          diagnosticdetail: args.diagnosticdetail,
-          businessratio: args.businessratio,
-          businesstotal: args.businesstotal,
-          averagespeed: args.averagespeed,
-          traveldistancetotal: args.traveldistancetotal,
-          traveldistancethisyear: args.traveldistancethisyear,
-          timeincar: args.timeincar,
+          lastFillUp: args.lastFillUp,
+          lastFillUpTime: args.lastFillUpTime,
+          lastLocation: args.lastLocation,
+          fuelLeft: args.fuelLeft,
+          travelSince: args.travelSince,
+          diagnosticIssue: args.diagnosticIssue,
+          diagnosticDetail: args.diagnosticDetail,
+          businessRatio: args.businessRatio,
+          businessTotal: args.businessTotal,
+          averageSpeed: args.averageSpeed,
+          travelDistanceTotal: args.travelDistanceTotal,
+          travelDistanceThisYear: args.travelDistanceThisYear,
+          timeInCar: args.timeInCar,
           emissions: args.emissions,
-          fueleconomy: args.fueleconomy,
+          fuelEconomy: args.fuelEconomy,
           parking: args.parking,
-          timetraveld: args.timetraveld,
-          startlocation: args.startlocation,
-          endlocation: args.endlocation,
+          timeTraveld: args.timeTraveld,
+          startLocation: args.startLocation,
+          endLocation: args.endLocation,
           ownerId: args.ownerId
         });
         return car.save();
       }
     }
   }
-})
-
+});
 
 module.exports = new GraphQLSchema({
   query: RootQuery,
   mutation: Mutation
 });
-
-
-// mutation adding owner
-
-// mutation {
-//   addOwner(firstName: "Sam"){
-//     firstName
-//   }
-// }
-// adding cars mutation
-// graphql does not like lastfilluplocation
-// lastfilluplocation
-
-// mutation {
-//   addCar(carName: "HONDA CIVIC", lastfillup: 20, lastfilluptime: "2019-06-17-T09:02", fuelleft: 28, traveldsince: 50, diagnostic: "PowerSteering", diagnosticdetail: "seeamechanic", businessratio: 10, businesstotal: 300000, averagespeed: 28, traveldistancetotal: 34000000, traveldistancethisyear: 7600, timeincar: 120, emissions: 74, fueleconomy: 1 5, parking: "", timetraveld: "20 1 9- 0 8- 1 2-T1 1:02", startlocation: "Brsibane", endlocation: "Sydney", ownerId: "5d5dd2ed55642b15a9d08d06"){
-//     carName
-//     lastfillup
-//     lastfilluptime
-//     fuelleft
-//     traveldsince
-//     diagnostic
-//     diagnosticdetail
-//     businessratio
-//     businesstotal
-//     averagespeed
-//     traveldistancetotal
-//     traveldistancethisyear
-//     timeincar
-//     emissions
-//     fueleconomy
-//     parking
-//     timetraveld
-//     startlocation
-//     endlocation
-//   }
-// }
-
-

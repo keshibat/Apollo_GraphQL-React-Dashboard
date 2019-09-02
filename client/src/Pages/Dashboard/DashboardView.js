@@ -1,72 +1,79 @@
 import React, { Component } from "react";
-import GoogleMap from "../../Components/GoogleMap/GoogleMap";
-import AntdTableComponent from "../../Components/AntdTable/AntdTableComponent";
-import { Card } from 'semantic-ui-react';
-// import CarList from "../../Components/CarList"
-import CarNameCard from "../../Components/Card/CarNameCard";
-import LastFillupCard from "../../Components/Card/LastFillupCard";
-// import LastFillupTimeCard from "../../Components/Card/LastFillupTimeCard";
+import { graphql } from "react-apollo";
+import { getDashboardAllDataQuery } from "../../queries/queries";
+
+import LoadingSpinner from "../../Components/LoadingSpinner";
+import { Card } from "semantic-ui-react";
+import LastFillUpCard from "../../Components/Card/LastFillUpCard";
 import FuelLeftCard from "../../Components/Card/FuelLeftCard";
-// import TraveldSinceCard from "../../Components/Card/TraveldSinceCard";
 import DiagnosticCard from "../../Components/Card/DiagnosticCard";
-// import DiagnosticDetailCard from "../../Components/Card/DiagnosticDetailCard";
 import BusinessRatioCard from "../../Components/Card/BusinessRatioCard";
-// import BusinessTotalCard from "../../Components/Card/BusinessTotalCard";
 import AverageSpeedCard from "../../Components/Card/AverageSpeedCard";
 import TravelDistanceTotalCard from "../../Components/Card/TravelDistanceTotalCard";
-// import TravelDistanceThisYearCard from "../../Components/Card/TravelDistanceThisYearCard";
 import TimeInCarCard from "../../Components/Card/TimeInCarCard";
 import EmissionsCard from "../../Components/Card/EmissionsCard";
 import FuelEconomyCard from "../../Components/Card/FuelEconomyCard";
-// import ParkingCard from "../../Components/Card/ParkingCard";
-// import TimeTraveldCard from "../../Components/Card/TimeTraveldCard";
-// import StartLocationCard from "../../Components/Card/StartLocationCard";
-// import EndLocationCard from "../../Components/Card/EndLocationCard";
-import SmartCard from "../../Components/Card/SmartCard";
 
-
+import GoogleMap from "../../Components/GoogleMap/GoogleMap";
+import AntdTableComponent from "../../Components/AntdTable/AntdTableComponent";
 
 class DashboardView extends Component {
   render() {
-    return (
-      <>
-        <div className="ui container">
-          <SmartCard />
-          <AverageSpeedCard />
-        </div>
-        <div className="ui container">
-        <h1><CarNameCard /></h1>
-        </div>
-        <div className="ui container">
-          <Card.Group>
-            <LastFillupCard />
-            <FuelLeftCard />
-            <DiagnosticCard />
-            <BusinessRatioCard />
-          </Card.Group>
-        </div>
-        <div className="ui container">
-          <GoogleMap />
-        </div>
-        <div className="ui container">
-          <Card.Group>
-            <AverageSpeedCard />
-            <TravelDistanceTotalCard />
-            <TimeInCarCard />
-          </Card.Group>
-        </div>
-        <div className="ui container">
-          <Card.Group>
-            <EmissionsCard />
-            <FuelEconomyCard />
-          </Card.Group>
-        </div>
-        <div className="ui container">
-          <AntdTableComponent />
-        </div>
-      </>
-    );
+    const data = this.props.data;
+    if (data.loading) {
+      return <LoadingSpinner />;
+    } else {
+      return (
+        <>
+          <div className="ui container">
+            <Card.Group>
+              <LastFillUpCard
+                lastFillUp={this.props.data.car.lastFillUp}
+                lastfillUpTime={this.props.data.car.lastFillUpTime}
+                lastLocation={this.props.data.car.lastLocation}
+              />
+              <FuelLeftCard
+                fuelLeft={this.props.data.car.fuelLeft}
+                travelSince={this.props.data.car.travelSince}
+              />
+              <DiagnosticCard
+                diagnosticIssue={this.props.data.car.diagnosticIssue}
+                diagnosticDetail={this.props.data.car.diagnosticDetail}
+              />
+              <BusinessRatioCard
+                businessRatio={this.props.data.car.businessRatio}
+                businessTotal={this.props.data.car.businessTotal}
+              />
+            </Card.Group>
+          </div>
+          <div className="ui container">
+            <GoogleMap />
+          </div>
+          <div className="ui container">
+            <Card.Group>
+              <AverageSpeedCard speed={this.props.data.car.averageSpeed} />
+              <TravelDistanceTotalCard
+                distanceTotal={this.props.data.car.travelDistanceTotal}
+                distanceTotalThisYear={
+                  this.props.data.car.travelDistanceThisYear
+                }
+              />
+              <TimeInCarCard timeInCar={this.props.data.car.timeInCar} />
+            </Card.Group>
+          </div>
+          <div className="ui container">
+            <Card.Group>
+              <EmissionsCard emission={this.props.data.car.emissions} />
+              <FuelEconomyCard fuelEconomy={this.props.data.car.fuelEconomy} />
+            </Card.Group>
+          </div>
+          <div className="ui container">
+            <AntdTableComponent />
+          </div>
+        </>
+      );
+    }
   }
 }
 
-export default DashboardView;
+export default graphql(getDashboardAllDataQuery)(DashboardView);

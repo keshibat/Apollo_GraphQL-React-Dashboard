@@ -3,36 +3,25 @@ const Schema = mongoose.Schema;
 
 const carSchema = new Schema({
   carName: String,
-  lastfillup: Number,
-  lastfilluptime: String,
-  lastfilluplocation: Number,
-  fuelleft: Number,
-  traveldsince: Number,
-  diagnostic: String,
-  diagnosticdetail: String,
-  businessratio: Number,
-  businesstotal: Number,
-  averagespeed: Number,
-  traveldistancetotal: Number,
-  traveldistancethisyear: Number,
-  timeincar: Number,
+  lastFillUp: Number,
+  lastFillUpTime: String,
+  lastLocation: String,
+  fuelLeft: Number,
+  travelSince: Number,
+  diagnosticIssue: String,
+  diagnosticDetail: String,
+  businessRatio: Number,
+  businessTotal: Number,
+  averageSpeed: Number,
+  travelDistanceTotal: Number,
+  travelDistanceThisYear: Number,
+  timeInCar: Number,
   emissions: Number,
-  fueleconomy: Number,
+  fuelEconomy: Number,
   parking: String,
-  timetraveld: String,
-  startlocation: String,
-  endlocation: String
+  timeTraveld: String,
+  startLocation: String,
+  endLocation: String
 });
 
 module.exports = mongoose.model("Car", carSchema);
-
-
-
-
-
-
-
-
-
-
-

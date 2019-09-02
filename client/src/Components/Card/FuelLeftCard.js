@@ -1,41 +1,30 @@
 import React, { Component } from "react";
-import { graphql } from "react-apollo";
-import { getFuelLeftQuery } from "../../queris/queris";
 import { Card, Icon } from "semantic-ui-react";
-import LoadingSpinner from '../LoadingSpinner';
-
-import TraveldSinceCard from "./TraveldSinceCard";
-
 
 class FuelLeftCard extends Component {
-  displayCarData() {
-    let data = this.props.data;
-    if (data.loading) {
-      return <LoadingSpinner />;
-    } else {
-      return <div>{data.car.fuelleft} km</div>
-    }
-  }
   render() {
     return (
-
-      <Card className="data-cards-r1" >
+      <Card className="data-cards-r1">
         <Card.Content>
-          <Icon circular inverted color="orange" name="tachometer alternate" size="big" />
+          <Icon
+            circular
+            inverted
+            color="orange"
+            name="tachometer alternate"
+            size="big"
+          />
           <div className="data-content">
-            <p>Esitmated Fuel Left:</p>
-            <h2>{this.displayCarData()}</h2>
+            <p>Estimated Fuel Left</p>
+            <h2>{this.props.fuelLeft} km</h2>
           </div>
           <Card.Content extra>
             <hr></hr>
-            <p><TraveldSinceCard /></p>
+            <p> {this.props.travelSince} km (since last fill up)</p>
           </Card.Content>
         </Card.Content>
       </Card>
-
-
     );
   }
 }
 
-export default graphql(getFuelLeftQuery)(FuelLeftCard);
+export default FuelLeftCard;

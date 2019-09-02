@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import * as parkData from "../../data/skateboard-parks.json";
 import { Header, Icon, Segment } from "semantic-ui-react";
-
 
 class SimpleMap extends Component {
   constructor(props) {
@@ -19,28 +18,28 @@ class SimpleMap extends Component {
   }
 
   displayMarkers = () => {
-      return parkData.features.map((park) => {
-      return <Marker
-              key={park.properties.PARK_ID}
-              position={{
-                lat: park.geometry.coordinates[1],
-                lng: park.geometry.coordinates[0]
-              }}
-        onClick={() => console.log("You clicked me!")} />
-    })
-  }
+    return parkData.features.map(park => {
+      return (
+        <Marker
+          key={park.properties.PARK_ID}
+          position={{
+            lat: park.geometry.coordinates[1],
+            lng: park.geometry.coordinates[0]
+          }}
+          onClick={() => console.log("You clicked me!")}
+        />
+      );
+    });
+  };
 
   render() {
-
     return (
-
       <Segment>
         <Header icon>
-            <Icon color="red" name="map marker alternate" size="big" />
-            Parking Location
+          <Icon color="red" name="map marker alternate" size="big" />
+          Parking Location
         </Header>
         <div class="ui embed">
-
           <Map
             google={this.props.google}
             zoom={9}
@@ -48,18 +47,12 @@ class SimpleMap extends Component {
           >
             {this.displayMarkers()}
           </Map>
-
         </div>
       </Segment>
-
-
-
-
     );
   }
 }
 
-
 export default GoogleApiWrapper({
-  apiKey: `${ process.env.REACT_APP_GOOGLE_KEY}`
+  apiKey: `${process.env.REACT_APP_GOOGLE_KEY}`
 })(SimpleMap);

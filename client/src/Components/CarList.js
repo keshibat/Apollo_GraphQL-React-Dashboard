@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { graphql } from "react-apollo";
 import { getCarsQuery } from "../queris/queris";
-import LoadingSpinner from './LoadingSpinner';
-
+import LoadingSpinner from "./LoadingSpinner";
 
 class CarList extends Component {
   displayCars() {
@@ -11,18 +10,14 @@ class CarList extends Component {
       return <LoadingSpinner />;
     } else {
       return data.cars.map(car => {
-        return (
-          <li key={car.id}>{car.carName}</li>
-        )
-      })
+        return <li key={car.id}>{car.carName}</li>;
+      });
     }
   }
   render() {
     return (
       <div>
-        <ul>
-          {this.displayCars()}
-        </ul>
+        <ul>{this.displayCars()}</ul>
       </div>
     );
   }

@@ -1,107 +1,121 @@
 .data-content h3 {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 h2 {
-    font-weight: 100;
+  font-weight: 100;
 }
 .data-content h2 {
-    margin: 0 auto;
-
+  margin: 0 auto;
 }
 
 .data-content {
-    display: inline-block;
-    float: right;
+  display: inline-block;
+  float: right;
 }
 
 .data-content p {
-    color: gray;
-    float: right;
+  color: gray;
+  float: right;
 }
 
 body {
-    background-color: #e1e4e8;
+  background-color: #e1e4e8;
 }
 
 .ui.cards {
-    justify-content: center;
+  justify-content: center;
+}
+
+.ui.segment {
+  margin: 0 auto;
 }
 
 .ui.container {
-    margin: 0 auto !important;
-    width: 100%;
-    margin-top: 2vh !important;
-
+  margin: 0 auto !important;
+  width: 100%;
+  margin-top: 2vh !important;
 }
 
-.ui.cards>.card {
-    margin: 0.5em 1em;
+.ui.cards > .card {
+  margin: 0.5em 1em;
 }
 
-.ui.card, .ui.cards>.card {
-    width: 20%;
+.ui.card,
+.ui.cards > .card {
+  width: 20%;
 }
 
 .ui.placeholder.segment {
-    flex-direction: inherit;
-    justify-content: normal;
-    min-height: 22rem;
-    margin: 4vh 5.5vw 4vh 5.5vw;
+  flex-direction: inherit;
+  justify-content: normal;
+  min-height: 22rem;
+  margin: 4vh 5.5vw 4vh 5.5vw;
 }
 
- .three-cards {
-    width: 30vw;
+.three-cards {
+  width: 30vw;
 }
 
 .three-cards-container {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .container-bg {
-    background-color: white;
-    margin: 0 auto;
-    width: 90%;
-    margin-top: 2vh;
+  background-color: white;
+  margin: 0 auto;
+  width: 90%;
+  margin-top: 2vh;
 }
 
 .card-data-text {
-    font-size: 2rem;
-    text-align: right;
-}
-
-.ui.segment:first-child {
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 86.1%;
+  font-size: 2rem;
+  text-align: right;
 }
 
 /******** LOGINPAGE STYLES *********/
 
-.bg-image {
-    background-image: url('https://unsplash.com/photos/nKg8IsVFMV8');
+.test {
+  width: 100%;
+  height: 40vh;
+  background-size: auto;
 }
 
 /******* SIDEBAR STYLES *******/
-.pushable>.pusher {
-    background-color: #e1e4e8;
+.pushable > .pusher {
+  background-color: #e1e4e8;
 }
 
 .ui.thin.left.sidebar {
-    width: 300px;
+  width: 300px;
+}
+
+.ui.fluid.dropdown {
+  margin-bottom: 1vh;
+}
+
+/********* NAVBAR STYLES *********/
+
+.navbar-bg {
+  background-color: #223344;
+}
+
+.navbar-button {
+  background: #223344 !important;
 }
 
 /******* MEDIA BREAKPOINTS ******/
 
 @media only screen and (max-width: 1250px) {
-    .ui.card, .ui.cards>.card {
-        width: 30%;
-    }
+  .ui.card,
+  .ui.cards > .card {
+    width: 30%;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    .ui.card, .ui.cards>.card {
-        width: 50%;
-    }
+  .ui.card,
+  .ui.cards > .card {
+    width: 50%;
+  }
 }

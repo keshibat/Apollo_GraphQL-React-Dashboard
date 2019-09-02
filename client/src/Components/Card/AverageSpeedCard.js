@@ -1,22 +1,23 @@
 import React, { Component } from "react";
-import { Card, Icon } from 'semantic-ui-react';
-import SmartCard from "./SmartCard"
-
+import { Card, Icon } from "semantic-ui-react";
 
 class AverageSpeedCard extends Component {
-
   render() {
     return (
-      <Card className="data-cards-r1" >
+      <Card className="data-cards-r1">
         <Card.Content>
-          <Icon float="left" circular inverted color="yellow" name="shipping fast" size="big" />
+          <Icon
+            circular
+            inverted
+            color="yellow"
+            name="shipping fast"
+            size="big"
+          />
           <div className="data-content">
             <p>Average Speed</p>
-            <h2><SmartCard/></h2>
+            <h2>{this.props.speed} km/hr</h2>
           </div>
-          <Card.Content extra>
-            <hr></hr>
-          </Card.Content>
+          <Card.Content extra></Card.Content>
         </Card.Content>
       </Card>
     );
