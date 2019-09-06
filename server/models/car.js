@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const carSchema = new Schema({
-  carName: String,
+  vehicleName: String,
   lastFillUp: Number,
   lastFillUpTime: String,
   lastLocation: String,
@@ -19,9 +19,10 @@ const carSchema = new Schema({
   emissions: Number,
   fuelEconomy: Number,
   parking: String,
-  timeTraveld: String,
+  timeTraveled: String,
   startLocation: String,
-  endLocation: String
+  endLocation: String,
+  ownerId: String
 });
 
 module.exports = mongoose.model("Car", carSchema);

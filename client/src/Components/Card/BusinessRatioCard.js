@@ -10,11 +10,10 @@ class BusinessRatioCard extends Component {
           <div className="data-content">
             <p>Business Travel</p>
             <h2>{this.props.businessRatio}%</h2>
-            <h2>{this.props.businessTotal}km</h2>
+            <h2>{this.props.businessTotal} km</h2>
           </div>
           <Card.Content extra></Card.Content>
         </Card.Content>
-        <hr></hr>
       </Card>
     );
   }

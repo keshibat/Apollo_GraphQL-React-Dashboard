@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import CarDropDown from "./Dropdown";
 import DashboardView from "../Pages/Dashboard/DashboardView";
 import LogoutModal from "./LogoutModal";
-import {
-  Button,
-  Header,
-  Icon,
-  Image,
-  Menu,
-  Segment,
-  Sidebar
-} from "semantic-ui-react";
+import { Button, Icon, Menu, Segment, Sidebar } from "semantic-ui-react";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
 
 export default class DashboardSidebar extends Component {
   state = {
@@ -24,10 +17,25 @@ export default class DashboardSidebar extends Component {
   handleSidebarHide = () => this.setState({ visible: false, icon: "sidebar" });
   DisplayCarData = () => this.setState({ visible: false });
 
+  constructor(props) {
+    super(props);
+    this.client = new ApolloClient({
+      uri:
+        "https://vo5gslmblnf35if2uyk66gyaha.appsync-api.us-east-2.amazonaws.com/graphql",
+      headers: {
+        Authorization: props.authToken,
+        UserID: props.userId,
+        aws_appsync_region: "us-east-2",
+        aws_appsync_authenticationType: "API_KEY",
+        aws_appsync_apiKey: "da2-2titmjxkfrhe7g7jy2vmsgkvxa"
+      }
+    });
+  }
+
   render() {
     const { visible, icon } = this.state;
     return (
-      <>
+      <ApolloProvider client={this.client}>
         <div className="navbar-bg">
           <Button
             className="navbar-button"
@@ -76,7 +84,7 @@ export default class DashboardSidebar extends Component {
             <DashboardView />
           </Sidebar.Pusher>
         </Sidebar.Pushable>
-      </>
+      </ApolloProvider>
     );
   }
 }

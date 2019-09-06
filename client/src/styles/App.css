@@ -1,3 +1,38 @@
+/********* DASHBOARD STYLES ********/
+
+.hero-img.hero-img {
+  height: 200px;
+  background: linear-gradient(
+      0deg,
+      rgba(41, 39, 41, 0.322),
+      rgba(0, 0, 0, 0.466)
+    ),
+    url("https://res.cloudinary.com/asheu321/image/upload/f_auto/bg-hero.jpg");
+}
+
+.ui.statistic > .value,
+.ui.statistics .statistic > .value {
+  color: #fff;
+}
+.ui.statistic > .label,
+.ui.statistics .statistic > .label {
+  color: gray;
+}
+
+.hero-img.hero-img h1,
+h3 {
+  color: rgba(255, 255, 255, 0.877);
+  padding: 1vh 0 0 1vh;
+}
+
+.hero-img.hero-img h3 {
+  text-align: center;
+}
+
+.hero-img-car-data.hero-img-car-data {
+  float: right;
+  margin-right: 4%;
+}
 .data-content h3 {
   margin: 0 auto;
 }
@@ -28,6 +63,8 @@ body {
 
 .ui.segment {
   margin: 0 auto;
+  border-radius: 0;
+  border: none;
 }
 
 .ui.container {
@@ -43,6 +80,7 @@ body {
 .ui.card,
 .ui.cards > .card {
   width: 20%;
+  box-shadow: 1px 5px 5px #bfbdb8;
 }
 
 .ui.placeholder.segment {
@@ -91,17 +129,55 @@ body {
 }
 
 .ui.fluid.dropdown {
-  margin-bottom: 1vh;
+  margin-bottom: 2vh;
+  margin-top: 1vh;
 }
 
 /********* NAVBAR STYLES *********/
 
 .navbar-bg {
-  background-color: #223344;
+  background-color: #0c1014;
 }
 
 .navbar-button {
-  background: #223344 !important;
+  background: #0c1014 !important;
+}
+
+/********* FOOTER *********/
+.footer-content {
+  margin-top: 1vh;
+  height: 250px;
+  background-color: #007bff;
+}
+
+.media-content {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  padding-top: 2%;
+  margin-bottom: 2vh;
+}
+.icon-color {
+  color: rgba(255, 255, 255, 0.794) !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.icon-color :hover {
+  color: yellow;
+}
+
+.resources-content {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.ui.list > a.item {
+  cursor: pointer;
+  color: #fff;
+}
+.ui.list {
+  margin: 0;
 }
 
 /******* MEDIA BREAKPOINTS ******/

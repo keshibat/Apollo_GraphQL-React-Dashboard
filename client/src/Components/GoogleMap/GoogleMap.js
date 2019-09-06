@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
-import * as parkData from "../../data/skateboard-parks.json";
 import { Header, Icon, Segment } from "semantic-ui-react";
 
 class SimpleMap extends Component {
@@ -18,18 +17,19 @@ class SimpleMap extends Component {
   }
 
   displayMarkers = () => {
-    return parkData.features.map(park => {
-      return (
-        <Marker
-          key={park.properties.PARK_ID}
-          position={{
-            lat: park.geometry.coordinates[1],
-            lng: park.geometry.coordinates[0]
-          }}
-          onClick={() => console.log("You clicked me!")}
-        />
-      );
-    });
+    //TODO;
+    // return parkData.features.map(park => {
+    //   return (
+    //     <Marker
+    //       key={park.properties.PARK_ID}
+    //       position={{
+    //         lat: park.geometry.coordinates[1],
+    //         lng: park.geometry.coordinates[0]
+    //       }}
+    //       onClick={() => console.log("You clicked me!")}
+    //     />
+    //   );
+    // });
   };
 
   render() {

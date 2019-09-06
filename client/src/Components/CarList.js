@@ -10,7 +10,7 @@ class CarList extends Component {
       return <LoadingSpinner />;
     } else {
       return data.cars.map(car => {
-        return <li key={car.id}>{car.carName}</li>;
+        return <li key={car.id}>{car.vehicleName}</li>;
       });
     }
   }
