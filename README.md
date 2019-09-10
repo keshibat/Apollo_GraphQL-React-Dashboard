@@ -14,7 +14,7 @@
 
 ```
 
-$ git clone https://github.com/keshibat/dogtrain_react.git
+$ git clone https://github.com/keshibat/Apollo_GraphQL-React-Dashboard.git
 $ cd graphql-carlist/server
 $ npm install
 $ nodemon app.js
