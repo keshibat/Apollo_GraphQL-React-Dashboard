@@ -1,19 +1,17 @@
 # Dashboard
 
+# Architecture
 
-# WF
 ![Imgur](https://i.imgur.com/2A2sIS4.png)
-![Imgur](https://i.imgur.com/aztX0hU.png)
-![Imgur](https://i.imgur.com/qaJgfR1.png)
 
-# EndPoint
-![Imgur](https://i.imgur.com/tOtfKBy.png)
+# Live Demo
 
-
+[![Imgur](https://i.imgur.com/UOL1jMb.png)](https://drive.google.com/file/d/1KVGyOlVTySNjU6L_2XOBkxPJVDVlMq4K/view)
 
 ### Instruction for running your lcoal computer
 
 #### Backend(Node, Express, MongoDB) (will be running port4000)
+
 ```
 
 $ git clone https://github.com/keshibat/dogtrain_react.git
@@ -23,11 +21,9 @@ $ nodemon app.js
 ```
 
 #### Frontend(React) (will be running port3000)
+
 ```
 $ cd graphql-carlist/server
 $ npm install
 $ npm start
 ```
-
-
-
