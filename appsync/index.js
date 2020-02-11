@@ -2,14 +2,25 @@ const fetch = require("isomorphic-fetch");
 const API_URL = "https://dev.gofar.co/api/";
 
 async function fetchJSON(url, options, authToken) {
+  console.log(`Fetching ${url} with authToken ${authToken}`);
   const rawResponse = await fetch(url, {
+    method: "GET",
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
       Authorization: authToken
     },
-    method: "GET",
     ...options
+  });
+  return await rawResponse.json();
+}
+
+async function postJSON(url, payload, options) {
+  console.log(url, payload, options);
+  const rawResponse = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
   });
   return await rawResponse.json();
 }
@@ -20,6 +31,10 @@ async function getVehicleData(vehicleId, authToken) {
 
 async function getUserData(userId, authToken) {
   return await fetchJSON(`${API_URL}users/${userId}`, {}, authToken);
+}
+
+async function getOwnedVehicles(userId, authToken) {
+  return await fetchJSON(`${API_URL}users/${userId}/ownedVehicles`, {}, authToken);
 }
 
 async function getRefillData(vehicleId, authToken) {
@@ -38,17 +53,6 @@ async function getTripSummaryData(userId, authToken) {
   return await fetchJSON(travelDistanceTotalUrl.toString(), {}, authToken);
 }
 
-async function tryLogin(email, password) {
-  const loginURL = `${API_URL}users/login`;
-  return await fetchJSON(loginURL.toString(), {
-    method: "POST",
-    body: JSON.stringify({
-      email,
-      password
-    })
-  });
-}
-
 async function getDetailsForVehicle(userId, vehicleId, authToken) {
   const [vehicleData, refillData, tripSummaryData] = await Promise.all([
     getVehicleData(vehicleId, authToken),
@@ -62,7 +66,7 @@ async function getDetailsForVehicle(userId, vehicleId, authToken) {
     lastFillUp: refillData.litres,
     lastFillUpTime: refillData.timestamp,
     lastLocation: refillData.location,
-    fuelLeft: "TODO",
+    fuelLeft: 999,
     travelSince: tripSummaryData.TODO,
     diagnosticIssue: ["TODO"],
     diagnosticDetail: ["TODO"],
@@ -70,13 +74,13 @@ async function getDetailsForVehicle(userId, vehicleId, authToken) {
     businessTotal: tripSummaryData.TODO,
     averageSpeed: tripSummaryData.averageSpeed,
     travelDistanceTotal: tripSummaryData.distance,
-    travelDistanceThisYear: "TODO",
+    travelDistanceThisYear: 99999,
     timeInCar: tripSummaryData.durationInSeconds,
     emissions: tripSummaryData.co2,
     fuelEconomy: tripSummaryData.litresPerHundredKm,
     parking: {
-      lat: "TODO",
-      lon: "TODO"
+      lat: 99,
+      lon: 99
     },
     timeTraveled: tripSummaryData.TODO,
     trips: [
@@ -89,34 +93,49 @@ async function getDetailsForVehicle(userId, vehicleId, authToken) {
   return finalResult;
 }
 
+async function getLogin(email, password) {
+  const loginURL = `${API_URL}users/login`;
+  return await postJSON(loginURL.toString(), { email, password });
+}
+
 exports.handler = async (event, context) => {
   console.log("Received event", JSON.stringify(event, 3));
 
+  const headers = event && event.headers;
+  console.log("context", JSON.stringify(context));
+
   switch (event.field) {
-    case "car":
+    case "car": {
       const vehicleId = event.arguments.id;
-      const headers = context.request.headers;
 
       const vehicleData = await getDetailsForVehicle(
-        headers.UserId,
+        headers.userid,
         vehicleId,
-        headers.Authorization
+        headers.authorization
       );
 
+      console.log("vehicleData", vehicleData);
+
       return vehicleData;
-    case "login":
-      const email = event.arguments.email;
-      const password = event.arguments.password;
-
-      const loginResult = await tryLogin(email, password);
+    }
+    case "login": {
+      const loginResponse = await getLogin(event.arguments.email, event.arguments.password);
+      console.log("LoginResponse", loginResponse);
       return {
-        successful: !!loginResult.id,
-        authToken: loginResult.id,
-        userId: loginResult.userId
+        userId: loginResponse.userId,
+        authToken: loginResponse.id,
+        successful: !!loginResponse.id
       };
-    case "owner":
-      return "TODO";
-
+    }
+    case "userData": {
+      const ownerData = await getUserData(headers.userid, headers.authorization);
+      const ownedVehicles = await getOwnedVehicles(headers.userid, headers.authorization);
+      console.log("ownedvehjicles", ownedVehicles);
+      return {
+        ...ownerData,
+        cars: ownedVehicles
+      };
+    }
     default:
       return "Unknown field, unable to resolve" + event.field;
   }

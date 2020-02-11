@@ -1,26 +1,31 @@
-import React, { Component } from "react";
-import { graphql } from "react-apollo";
-import { getCarsQuery } from "../queris/queris";
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+
+import { getUserDataQuery } from "../queries/queries";
 import LoadingSpinner from "./LoadingSpinner";
 
-class CarList extends Component {
-  displayCars() {
-    let data = this.props.data;
-    if (data.loading) {
-      return <LoadingSpinner />;
-    } else {
-      return data.cars.map(car => {
-        return <li key={car.id}>{car.vehicleName}</li>;
-      });
-    }
-  }
-  render() {
+function displayCars(data) {
+  return data.cars.map(car => {
+    return (<li key={car.id}>
+      {car.displayName}({car.make} - {car.model})
+    </li>);
+  });
+}
+
+export default function() {
+  const { loading, error, data } = useQuery(getUserDataQuery);
+  if (loading) {
+    return <LoadingSpinner />;
+  } else if (error) {
+    debugger;
+    return <p>Error! {error}</p>;
+  } else {
+    debugger;
+
     return (
       <div>
-        <ul>{this.displayCars()}</ul>
+        <ul>{displayCars(data.userData)}</ul>
       </div>
     );
   }
 }
-
-export default graphql(getCarsQuery)(CarList);

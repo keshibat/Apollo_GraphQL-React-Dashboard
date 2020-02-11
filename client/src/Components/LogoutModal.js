@@ -12,9 +12,6 @@ class LogOutModal extends Component {
             Logout
           </Menu.Item>
         }
-        header="Log Out"
-        content="Are you sure you want to log out?"
-        actions={["No", { positive: true }]}
         basic
       >
         <Header icon="log out" content="  Log Out" />
